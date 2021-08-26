@@ -7,7 +7,8 @@ from .models import *
 
 def home(request):
     context = {
-        "articles": Article.objects.all().filter(status='p').order_by('-publish')
+        "articles": Article.objects.all().filter(status='p').order_by('-publish'),
+        "category": Category.objects.all().filter(status=True)
     }
     return render(request, "blog/home.html", context)
 

@@ -1,5 +1,6 @@
 from enum import auto
 from django.db import models
+from django.db.models.base import Model
 from django.utils import timezone
 
 from extensions.utils import jalali_converter
@@ -15,6 +16,7 @@ class Article(models.Model):
     )
 
     title = models.CharField(max_length=128, verbose_name="عنوان")
+    category = models.ManyToManyField('Category', verbose_name="دسته بندی")
     description = models.TextField(verbose_name="توضیحات")
     img = models.ImageField(upload_to="Images", verbose_name="عکس")
     publish = models.DateTimeField(
@@ -36,3 +38,19 @@ class Article(models.Model):
         return jalali_converter(self.publish)
 
     jpublish.short_description = "زمان انتشار"
+
+
+class Category(models.Model):
+    title = models.CharField(max_length=200, verbose_name="عنوان دسته بندی")
+    slug = models.SlugField(max_length=100, unique=True,
+                            verbose_name="آدرس دسته بندی")
+    status = models.BooleanField(default=True, verbose_name="وضعیت نمایش")
+    position = models.IntegerField(verbose_name="موقعیت")
+
+    class Meta:
+        verbose_name = "دسته بندی"
+        verbose_name_plural = "دسته بندی ها"
+        ordering = ['position']
+
+    def __str__(self):
+        return self.title
