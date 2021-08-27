@@ -5,6 +5,13 @@ from django.utils import timezone
 
 from extensions.utils import jalali_converter
 
+# my managers
+
+
+class ArticleManager(models.Manager):
+    def published(self):
+        return self.filter(status='p')
+
 # Create your models here.
 
 
@@ -16,7 +23,8 @@ class Article(models.Model):
     )
 
     title = models.CharField(max_length=128, verbose_name="عنوان")
-    category = models.ManyToManyField('Category', verbose_name="دسته بندی")
+    category = models.ManyToManyField(
+        'Category', verbose_name="دسته بندی", related_name="articles")
     description = models.TextField(verbose_name="توضیحات")
     img = models.ImageField(upload_to="Images", verbose_name="عکس")
     publish = models.DateTimeField(
@@ -36,6 +44,11 @@ class Article(models.Model):
 
     def jpublish(self):
         return jalali_converter(self.publish)
+
+    def category_published(self):
+        return self.category.filter(status=True)
+
+    objects = ArticleManager()
 
     jpublish.short_description = "زمان انتشار"
 

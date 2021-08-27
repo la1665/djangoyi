@@ -19,7 +19,7 @@
 <div class="container px-4 px-lg-5">
     <div class="row gx-4 gx-lg-5 justify-content-center">
         <div class="col-md-10 col-lg-8 col-xl-7">
-
+            <h3 class="alert alert-primary text-center">دسته بندی: {{ category.title }}</h3>
             {% for article in articles %}
             <!-- Post preview-->
             <div class="post-preview">
@@ -38,28 +38,28 @@
                 </p>
                 <div>
                     {% for cat in article.category_published.all %}
-                    <a href="{% url 'blog:category' cat.slug %}"># {{ cat.title }}</a>
+                    <a href="#"># {{ cat.title }}</a>
 
                     {% endfor %}
                 </div>
             </div>
             <!-- Divider-->
-            <hr class=" my-4" />
+            <hr class="my-4" />
             {% endfor %}
             <!-- Pager-->
             <div class="clearfix pager-bottun">
                 {% if articles.has_previous %}
                 <a class="btn btn-primary float-right ml-3"
-                    href="{% url 'blog:home' articles.previous_page_number %}">پست های جدید تر &rarr;</a>
+                    href="{% url 'blog:category' category.slug articles.previous_page_number %}">پست های جدید تر
+                    &rarr;</a>
                 {% endif %}
                 {% if articles.has_next %}
-                <a class="btn btn-primary float-left" href="{% url 'blog:home' articles.next_page_number %}">پست
+                <a class="btn btn-primary float-left"
+                    href="{% url 'blog:category' category.slug  articles.next_page_number %}">پست
                     های
                     قدیمی تر &larr;</a>
                 {% endif %}
             </div>
         </div>
     </div>
-</div>
-</div>
-{% endblock content %}
+    {% endblock content %}

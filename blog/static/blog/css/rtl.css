@@ -7,19 +7,21 @@
          url('Sahel.ttf') format('truetype');
   }
 
-body {
-    direction: rtl;
-    text-align: right;
-    font-family: "Sahel";
-    font-size: 10px;
-}
 
+  
+  
+body {
+      direction: rtl;
+      text-align: right;
+      font-family: "Sahel";
+      font-size: 10px;
+    }
+    
 ul.navbar-nav {
-    margin-left: initial !important;
-    margin-right: auto;
-}
+        margin-left: initial !important;
+        margin-right: auto;
+    }
 
 p.post-meta {
     text-align: left;
 }
-
