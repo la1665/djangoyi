@@ -11,5 +11,4 @@ urlpatterns = [
     path('category/<slug:slug>/', views.category, name="category"),
     path('category/<slug:slug>/page/<int:page>/',
          views.category, name="category"),
-    path('api/', views.api, name='api'),
 ]

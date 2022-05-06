@@ -44,13 +44,14 @@ class Article(models.Model):
 
     def jpublish(self):
         return jalali_converter(self.publish)
+    jpublish.short_description = "زمان انتشار"
 
     def category_published(self):
         return self.category.filter(status=True)
 
-    objects = ArticleManager()
+    objects = models.Manager()
+    published_objects = ArticleManager()
 
-    jpublish.short_description = "زمان انتشار"
 
 
 class Category(models.Model):
