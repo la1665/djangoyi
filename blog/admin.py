@@ -21,7 +21,7 @@ admin.site.register(Article, ArticleAdmin)
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('position', 'title', 'slug', 'status')
+    list_display = ('position', 'title', 'slug', 'parent', 'status')
     list_display_links = ('title',)
     list_filter = ('status',)
     search_fields = ('title', 'slug')
