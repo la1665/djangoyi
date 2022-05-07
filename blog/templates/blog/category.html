@@ -48,14 +48,14 @@
             {% endfor %}
             <!-- Pager-->
             <div class="clearfix pager-bottun">
-                {% if articles.has_previous %}
+                {% if page_obj.has_previous %}
                 <a class="btn btn-primary float-right ml-3"
-                    href="{% url 'blog:category' category.slug articles.previous_page_number %}">پست های جدید تر
+                    href="{% url 'blog:category' category.slug page_obj.previous_page_number %}">پست های جدید تر
                     &rarr;</a>
                 {% endif %}
-                {% if articles.has_next %}
+                {% if page_obj.has_next %}
                 <a class="btn btn-primary float-left"
-                    href="{% url 'blog:category' category.slug  articles.next_page_number %}">پست
+                    href="{% url 'blog:category' category.slug  page_obj.next_page_number %}">پست
                     های
                     قدیمی تر &larr;</a>
                 {% endif %}
