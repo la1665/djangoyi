@@ -1,4 +1,3 @@
-# venv
-pipfile
-pipfile.lock
+venv
 **/__pycache__/**
+db.sqlite3
