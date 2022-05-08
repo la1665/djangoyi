@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.utils.html import format_html
 from django.utils import timezone
@@ -5,26 +6,23 @@ from django.utils import timezone
 from extensions.utils import jalali_converter
 
 # my managers
-
-
 class ArticleManager(models.Manager):
     def published(self):
         return self.filter(status='p')
-
 
 
 class CategoryManager(models.Manager):
     def active(self):
         return self.filter(status=True)
 
-
+# Models
 class Article(models.Model):
 
     STATUS_CHOICES = (
         ('d', 'پیش نویس'),
         ('p', 'منتشر شده'),
     )
-
+    author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='articles', verbose_name='نویسنده')
     title = models.CharField(max_length=128, verbose_name="عنوان")
     category = models.ManyToManyField(
         'Category', verbose_name="دسته بندی", related_name="articles")

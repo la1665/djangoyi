@@ -1,7 +1,5 @@
-from email import contentmanager
-from multiprocessing import context
-from re import template
 from django.shortcuts import render, get_object_or_404
+from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse, Http404
 from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView
@@ -64,4 +62,21 @@ class CategoryList(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = category
+        return context
+
+
+class AuthorList(ListView):
+    paginate_by = 2
+    template_name = "blog/author_list.html"
+    context_object_name = "articles"
+
+    def get_queryset(self):
+        global author
+        username = self.kwargs.get('username')
+        author = get_object_or_404(User, username=username)
+        return Article.published_objects.published().filter(author=author)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['author'] = author
         return context
