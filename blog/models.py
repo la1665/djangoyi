@@ -50,6 +50,12 @@ class Article(models.Model):
     def thumbnail_tag(self):
         return format_html("<img width='60' height='60' style='border-radius: 5px;' src='{}'>".format(self.img.url))
     thumbnail_tag.short_description = "عکس"
+    
+    def category_to_str(self):
+        return "، ".join([category.title for category in self.category.active()])
+    category_to_str.short_description = "دسته بندی"
+
+    
     objects = models.Manager()
     published_objects = ArticleManager()
 
