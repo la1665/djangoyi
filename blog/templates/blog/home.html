@@ -29,7 +29,7 @@
                     </h2>
                 </a>
                 <h3 class="post-subtitle">
-                    {{ article.description|truncatewords:4 }}
+                    {{ article.description|striptags|truncatewords:4 }}
                 </h3>
                 <p class="post-meta">
                     انتشار شده توسط

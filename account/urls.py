@@ -19,5 +19,6 @@ urlpatterns = [
 
 urlpatterns += [
     path('', v.ArticleList.as_view(), name='home'),
+    path('article/create', v.ArticleCreate.as_view(), name='article-create'),
 
 ]

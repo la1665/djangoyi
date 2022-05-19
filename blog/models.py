@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.html import format_html
 from django.utils import timezone
+from django.urls import reverse
 
 from extensions.utils import jalali_converter
 
@@ -55,7 +56,10 @@ class Article(models.Model):
         return "، ".join([category.title for category in self.category.active()])
     category_to_str.short_description = "دسته بندی"
 
-    
+    def get_absolute_url(self):
+        return reverse("account:home")
+
+
     objects = models.Manager()
     published_objects = ArticleManager()
 
