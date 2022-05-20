@@ -21,7 +21,7 @@ class ArticleList(ListView):
     queryset = Article.published_objects.published()
     template_name = "blog/home.html"
     context_object_name = "articles"
-    paginate_by = 2
+    paginate_by = 4
 
 
 # def detail(request, slug):
@@ -49,7 +49,7 @@ class ArticleDetail(DetailView):
 #     return render(request, "blog/category.html", context)
 
 class CategoryList(ListView):
-    paginate_by = 3
+    paginate_by = 4
     template_name = "blog/category.html"
     context_object_name = "articles"
 

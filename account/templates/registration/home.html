@@ -25,7 +25,14 @@
             <tbody>
                 {% for article in object_list %}
                 <tr>
-                    <td>{{ article.title }}</td>
+                    <td>
+                      {% if article.status == 'd' or user.is_superuser %}
+                        <a href="{% url 'account:article-update' article.pk %}">
+                        {{ article.title }}</a>
+                      {% else %}
+                        {{ article.title }}
+                      {% endif %}
+                    </td>
                     <td>{{ article.author }}</td>
                     <td><img src="{{ article.img.url }}" width="60"</td>
                     <td>{{ article.description|striptags|truncatewords:"15" }}</td>
@@ -37,6 +44,10 @@
                             <a target="bblank" class="badge badge-primary" href="{% url 'blog:detail' article.slug %}">نمایش مقاله</a>
                         {% else %}
                         <span class="badge badge-danger">پیش نویس</span>
+                        {% endif %}
+                        {% if user.is_superuser %}
+                        <a class="badge text-danger" href="{% url 'account:article-delete' article.pk %}">حذف مقاله</a>
+
                         {% endif %}
                     </td>
                 </tr>

@@ -20,5 +20,7 @@ urlpatterns = [
 urlpatterns += [
     path('', v.ArticleList.as_view(), name='home'),
     path('article/create', v.ArticleCreate.as_view(), name='article-create'),
+    path('article/update/<int:pk>', v.ArticleUpdate.as_view(), name='article-update'),
+    path('article/delete/<int:pk>', v.ArticleDelete.as_view(), name='article-delete'),
 
 ]
