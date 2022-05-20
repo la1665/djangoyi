@@ -22,6 +22,8 @@ class Article(models.Model):
     STATUS_CHOICES = (
         ('d', 'پیش نویس'),
         ('p', 'منتشر شده'),
+        ('i', 'در حال بررسی'),
+        ('b', 'برگشت خورده'),
     )
     author = models.ForeignKey(User, null=True, on_delete=models.SET_NULL, related_name='articles', verbose_name='نویسنده')
     title = models.CharField(max_length=128, verbose_name="عنوان")

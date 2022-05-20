@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView
 
 from .models import Article, Category
-
+from account.mixins import AuthorAccessMixin
 
 # def home(request, page=1):
 #     articles_list = Article.published_objects.published().order_by('-publish')
@@ -34,6 +34,13 @@ class ArticleDetail(DetailView):
     def get_object(self):
         slug = self.kwargs.get('slug')
         return get_object_or_404(Article.published_objects.published(), slug=slug)
+    template_name = "blog/detail.html"
+
+
+class ArticlePreview(AuthorAccessMixin, DetailView):
+    def get_object(self):
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Article, pk=pk)
     template_name = "blog/detail.html"
 
 
