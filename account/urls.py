@@ -5,7 +5,7 @@ from . import views as v
 app_name = 'account'
 
 urlpatterns = [
-    path('login/', views.LoginView.as_view(), name='login'),
+    # path('login/', views.LoginView.as_view(), name='login'),
     path('logout/', views.LogoutView.as_view(), name='logout'),
 
     # path('password_change/', views.PasswordChangeView.as_view(), name='password_change'),
@@ -22,5 +22,7 @@ urlpatterns += [
     path('article/create', v.ArticleCreate.as_view(), name='article-create'),
     path('article/update/<int:pk>', v.ArticleUpdate.as_view(), name='article-update'),
     path('article/delete/<int:pk>', v.ArticleDelete.as_view(), name='article-delete'),
+    path('profile/', v.Profile.as_view(), name='profile'),
+    path('login/', v.Login.as_view(), name='login'),
 
 ]
