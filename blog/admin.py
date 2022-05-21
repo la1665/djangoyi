@@ -40,7 +40,7 @@ category_draft.short_description = 'پیش نویس دسته بندی های ا�
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title','thumbnail_tag', 'slug','author', 'jpublish', 'status', 'category_to_str')
+    list_display = ('title','thumbnail_tag', 'slug','author', 'jpublish', 'status', 'is_special', 'category_to_str')
     list_display_links = ('title',)
     list_filter = ('publish', 'status', 'author')
     search_fields = ('title', 'description')
