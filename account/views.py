@@ -9,7 +9,7 @@ from . import mixins
 from blog.models import Article
 
 
-class ArticleList(LoginRequiredMixin, ListView):
+class ArticleList(mixins.AuthorsAccessMixin, ListView):
     template_name = 'registration/home.html'
 
     def get_queryset(self):
@@ -20,7 +20,7 @@ class ArticleList(LoginRequiredMixin, ListView):
             return Article.objects.filter(author=self.request.user)
         
 
-class ArticleCreate(LoginRequiredMixin,mixins.FormValidMixin, mixins.FieldsMixin, CreateView):
+class ArticleCreate(mixins.AuthorsAccessMixin, mixins.FormValidMixin, mixins.FieldsMixin, CreateView):
     model = Article
     fields = ["author", "title", "slug", "category", "description", "img", "publish", "status"]
     template_name = "registration/article-create-update.html"

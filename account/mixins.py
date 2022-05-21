@@ -1,6 +1,6 @@
 from ast import arg
 from django.http import Http404
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 
 from blog.models import Article
 
@@ -48,3 +48,13 @@ class SuperUserAccessMixin():
         
         else:
             raise Http404("You can't see this page.!")
+
+class AuthorsAccessMixin():
+    def dispatch(self, request,*args, **kwargs):
+        if request.user.is_authenticated:
+            if request.user.is_superuser or request.user.is_author:
+                return super().dispatch(request, *args, **kwargs)
+            else:
+                return redirect("account:profile")
+        else:
+            return redirect("account:login")
