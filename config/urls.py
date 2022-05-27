@@ -18,11 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+from account.views import Login
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
     path('', include('blog.urls')),
+    path('', include('django.contrib.auth.urls')),
+    path('login/', Login.as_view(), name='login'),
     path('account/', include('account.urls')),
+    path('admin/', admin.site.urls),
 ] 
 
 if settings.DEBUG:

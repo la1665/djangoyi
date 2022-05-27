@@ -6,7 +6,8 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     is_author = models.BooleanField(default=False, verbose_name="وضعیت نویسندگی")
     special_user = models.DateTimeField(default=timezone.now, verbose_name="کاربر ویژه تا تاریخ ")
-    
+    email = models.EmailField(unique=True, verbose_name='ایمیل')
+
     def is_special_user(self):
         if self.special_user > timezone.now():
             return True
