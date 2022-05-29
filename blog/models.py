@@ -3,6 +3,9 @@ from django.db import models
 from django.utils.html import format_html
 from django.utils import timezone
 from django.urls import reverse
+from django.contrib.contenttypes.fields import GenericRelation
+
+from comment.models import Comment
 
 from extensions.utils import jalali_converter
 
@@ -39,6 +42,7 @@ class Article(models.Model):
     status = models.CharField(
         max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت")
     slug = models.SlugField(max_length=100, unique=True, verbose_name="آدرس")
+    comments = GenericRelation(Comment)
 
     class Meta:
         verbose_name = "مقاله"

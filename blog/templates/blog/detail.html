@@ -1,4 +1,5 @@
 {% extends 'blog/base.html' %}
+{% load comment_tags %}
 {% load static %}
 
 {% block title %} سلیسیوم| {{ article.title }}{% endblock title %}
@@ -42,6 +43,9 @@
             {% else %}
                 {{ article.description|safe }}
             {% endif %}
+            
+            {% render_comments article request %}
+            {% include_bootstrap %} 
             </div>
         </div>
     </div>
