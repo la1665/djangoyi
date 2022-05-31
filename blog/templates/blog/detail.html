@@ -23,7 +23,8 @@
                             <a href="{% url 'blog:author' article.author %}"> {{ article.author.get_full_name }} </a>
                         </p>
                         <time>{{ article.jpublish }}</time></small>
-                        <div>{% ratings article %}</div>
+                        <div>{% ratings object %}</div>
+                        <div>بازدید ها:{{ article.hits.count }}</div>
                     </span>
                 </div>
             </div>

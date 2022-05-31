@@ -20,6 +20,10 @@ class CategoryManager(models.Manager):
         return self.filter(status=True)
 
 # Models
+class IP(models.Model):
+    ip_address = models.GenericIPAddressField(verbose_name="آدرس آی-پی")
+
+
 class Article(models.Model):
 
     STATUS_CHOICES = (
@@ -43,6 +47,7 @@ class Article(models.Model):
         max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت")
     slug = models.SlugField(max_length=100, unique=True, verbose_name="آدرس")
     comments = GenericRelation(Comment)
+    hits = models.ManyToManyField(IP, blank=True, related_name="hits", verbose_name="بازدید ها")
 
     class Meta:
         verbose_name = "مقاله"
