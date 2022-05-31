@@ -1,34 +1,30 @@
 from django.shortcuts import render, get_object_or_404
-from account.models import User
 from django.http import HttpResponse, JsonResponse, Http404
 from django.core.paginator import Paginator
 from django.views.generic import ListView, DetailView
+from django.db.models import Count, Q
+from datetime import datetime, timedelta
 
-from .models import Article, Category
+from account.models import User
+from .models import Article, Category, ArticleHit
 from account.mixins import AuthorAccessMixin
 
-# def home(request, page=1):
-#     articles_list = Article.published_objects.published().order_by('-publish')
-#     paginator = Paginator(articles_list, 2)
-#     articles = paginator.get_page(page)
-
-#     context = {
-#         "articles": articles, }
-
-#     return render(request, "blog/home.html", context)
 
 class ArticleList(ListView):
     queryset = Article.published_objects.published()
     template_name = "blog/home.html"
     context_object_name = "articles"
     paginate_by = 4
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        last_month = datetime.today() - timedelta(days=30)
+        context['popular_articles'] = Article.published_objects.published().annotate(
+            count=Count('hits', filter=Q(articlehit__created__gt=last_month))
+            ).order_by('-count', '-publish')[:5]
+        return context
 
 
-# def detail(request, slug):
-#     context = {
-#         "article": get_object_or_404(Article.published_objects.published(), slug=slug),
-#     }
-#     return render(request, "blog/detail.html", context)
 
 class ArticleDetail(DetailView):
     def get_object(self):
@@ -49,17 +45,6 @@ class ArticlePreview(AuthorAccessMixin, DetailView):
         return get_object_or_404(Article, pk=pk)
     template_name = "blog/detail.html"
 
-
-# def category(request, slug, page=1):
-#     category = get_object_or_404(Category, slug=slug, status=True)
-#     articles_list = Article.published_objects.published().filter(category=category)
-#     paginator = Paginator(articles_list, 3)
-#     articles = paginator.get_page(page)
-#     context = {
-#         "category": category,
-#         "articles": articles,
-#     }
-#     return render(request, "blog/category.html", context)
 
 class CategoryList(ListView):
     paginate_by = 4

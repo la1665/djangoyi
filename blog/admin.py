@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Article, Category, IP
+from .models import Article, Category, IP, ArticleHit
 
 def article_published(modeladmin, request, queryset):
     rows_updated = queryset.update(status='p')
@@ -64,3 +64,4 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Category, CategoryAdmin)
 
 admin.site.register(IP)
+admin.site.register(ArticleHit)

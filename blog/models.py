@@ -1,3 +1,4 @@
+from ipaddress import ip_address
 from account.models import User
 from django.db import models
 from django.utils.html import format_html
@@ -47,7 +48,7 @@ class Article(models.Model):
         max_length=1, choices=STATUS_CHOICES, verbose_name="وضعیت")
     slug = models.SlugField(max_length=100, unique=True, verbose_name="آدرس")
     comments = GenericRelation(Comment)
-    hits = models.ManyToManyField(IP, blank=True, related_name="hits", verbose_name="بازدید ها")
+    hits = models.ManyToManyField(IP, through='ArticleHit', blank=True, related_name="hits", verbose_name="بازدید ها")
 
     class Meta:
         verbose_name = "مقاله"
@@ -75,6 +76,11 @@ class Article(models.Model):
     objects = models.Manager()
     published_objects = ArticleManager()
 
+
+class ArticleHit(models.Model):
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    ip_address = models.ForeignKey(IP, on_delete=models.CASCADE)
+    created = models.DateTimeField(auto_now_add=True)
 
 
 class Category(models.Model):
