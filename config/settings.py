@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'django_gravatar',
     'comment',
+    'star_ratings',
 ]
 
 MIDDLEWARE = [
@@ -66,10 +67,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
+# Templates Directory
+TEMPLATE_DIR = os.path.join(BASE_DIR,"templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -154,3 +157,7 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = config('EMAIL_PORT')
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+
+
+# Rating star:
+STAR_RATINGS_STAR_HEIGHT = 12
